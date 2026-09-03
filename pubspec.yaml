@@ -1,9 +1,11 @@
 name: toastio
 description: A lightweight, animated Glassmorphism toast for Flutter with global and context-based APIs.
-version: 1.0.0
+version: 1.0.1
+
 repository: https://github.com/fsdramjan/toastio
 issue_tracker: https://github.com/fsdramjan/toastio/issues
 homepage: https://github.com/fsdramjan/toastio
+
 topics:
   - toast
   - flutter
