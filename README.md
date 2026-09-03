@@ -1,6 +1,10 @@
+[![pub package](https://img.shields.io/pub/v/toastio.svg)](https://pub.dev/packages/toastio)
+[![pub points](https://img.shields.io/pub/points/toastio)](https://pub.dev/packages/toastio/score)
+[![likes](https://img.shields.io/pub/likes/toastio)](https://pub.dev/packages/toastio)
+
 # toastio
 
-A lightweight, animated Glassmorphism toast for Flutter.
+A lightweight, animated Glassmorphism toast package for Flutter with global and context-based APIs.
 
 ## Features
 
@@ -18,8 +22,6 @@ A lightweight, animated Glassmorphism toast for Flutter.
 
 ## 📸 Screenshots
 
-## 📸 Screenshots
-
 <p align="center">
   <img src="./example/assets/success.png" width="220" alt="Success Toast">
   <img src="./example/assets/error.png" width="220" alt="Error Toast">
@@ -34,11 +36,11 @@ A lightweight, animated Glassmorphism toast for Flutter.
 
 ## Installation
 
-Add the package to `pubspec.yaml`:
+Add the package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  toastio: ^1.0.0
+  toastio: ^1.0.1
 ```
 
 Then run:
@@ -47,7 +49,7 @@ Then run:
 flutter pub get
 ```
 
-## Global setup
+## Global Setup
 
 Create a navigator key:
 
@@ -101,6 +103,8 @@ Toastio.show(
 
 ## Customization
 
+Customize the toast appearance, duration, position, colors, and close button:
+
 ```dart
 Toastio.showGlobal(
   'Custom toast',
@@ -114,7 +118,7 @@ Toastio.showGlobal(
 );
 ```
 
-### Custom icon
+### Custom Icon
 
 ```dart
 Toastio.showGlobal(
@@ -123,7 +127,7 @@ Toastio.showGlobal(
 );
 ```
 
-### Custom leading widget
+### Custom Leading Widget
 
 ```dart
 Toastio.showGlobal(
@@ -135,11 +139,45 @@ Toastio.showGlobal(
 );
 ```
 
-## Dismiss manually
+## Dismiss Manually
+
+You can dismiss the currently visible toast manually:
 
 ```dart
 Toastio.dismiss();
 ```
+
+## Toast Positions
+
+Toast messages can be displayed at different positions:
+
+```dart
+Toastio.showGlobal(
+  'Top toast',
+  position: ToastPosition.top,
+);
+```
+
+Available positions:
+
+- `ToastPosition.top`
+- `ToastPosition.center`
+- `ToastPosition.bottom`
+
+## Duration
+
+Set a custom duration for the toast:
+
+```dart
+Toastio.showGlobal(
+  'This toast stays longer',
+  duration: const Duration(seconds: 4),
+);
+```
+
+## Example
+
+Check the `example/` directory for a complete Flutter example demonstrating the available toast types and customization options.
 
 ## Contributing
 
@@ -147,7 +185,7 @@ Contributions are welcome! ❤️
 
 If you have an idea, bug fix, improvement, or new feature, feel free to contribute.
 
-### How to contribute
+### How to Contribute
 
 1. Fork the repository
 2. Create a new branch
