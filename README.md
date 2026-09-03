@@ -18,16 +18,18 @@ A lightweight, animated Glassmorphism toast for Flutter.
 
 ## 📸 Screenshots
 
+## 📸 Screenshots
+
 <p align="center">
-  <img src="example/assets/success.png" width="220" alt="Success Toast">
-  <img src="example/assets/error.png" width="220" alt="Error Toast">
-  <img src="example/assets/warning.png" width="220" alt="Warning Toast">
+  <img src="./example/assets/success.png" width="220" alt="Success Toast">
+  <img src="./example/assets/error.png" width="220" alt="Error Toast">
+  <img src="./example/assets/warning.png" width="220" alt="Warning Toast">
 </p>
 
 <p align="center">
-  <img src="example/assets/info.png" width="220" alt="Info Toast">
-  <img src="example/assets/top.png" width="220" alt="Top Position Toast">
-  <img src="example/assets/image.png" width="220" alt="Toast with Image">
+  <img src="./example/assets/info.png" width="220" alt="Info Toast">
+  <img src="./example/assets/top.png" width="220" alt="Top Position Toast">
+  <img src="./example/assets/image.png" width="220" alt="Toast with Image">
 </p>
 
 ## Installation
