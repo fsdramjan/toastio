@@ -23,15 +23,15 @@ A lightweight, animated Glassmorphism toast package for Flutter with global and 
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="./example/assets/success.png" width="220" alt="Success Toast">
-  <img src="./example/assets/error.png" width="220" alt="Error Toast">
-  <img src="./example/assets/warning.png" width="220" alt="Warning Toast">
+  <img src="https://raw.githubusercontent.com/fsdramjan/toastio/main/example/assets/success.png" width="220" alt="Success Toast">
+  <img src="https://raw.githubusercontent.com/fsdramjan/toastio/main/example/assets/error.png" width="220" alt="Error Toast">
+  <img src="https://raw.githubusercontent.com/fsdramjan/toastio/main/example/assets/warning.png" width="220" alt="Warning Toast">
 </p>
 
 <p align="center">
-  <img src="./example/assets/info.png" width="220" alt="Info Toast">
-  <img src="./example/assets/top.png" width="220" alt="Top Position Toast">
-  <img src="./example/assets/image.png" width="220" alt="Toast with Image">
+  <img src="https://raw.githubusercontent.com/fsdramjan/toastio/main/example/assets/info.png" width="220" alt="Info Toast">
+  <img src="https://raw.githubusercontent.com/fsdramjan/toastio/main/example/assets/top.png" width="220" alt="Top Position Toast">
+  <img src="https://raw.githubusercontent.com/fsdramjan/toastio/main/example/assets/image.png" width="220" alt="Toast with Image">
 </p>
 
 ## Installation
@@ -40,7 +40,7 @@ Add the package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  toastio: ^1.0.1
+  toastio: ^1.0.3
 ```
 
 Then run:
