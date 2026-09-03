@@ -5,7 +5,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  AppToast.initialize(navigatorKey);
+  Toastio.initialize(navigatorKey);
   runApp(const ExampleApp());
 }
 
@@ -37,29 +37,29 @@ class ExamplePage extends StatelessWidget {
           alignment: WrapAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () => AppToast.success('Profile updated'),
+              onPressed: () => Toastio.success('Profile updated'),
               child: const Text('Success'),
             ),
             ElevatedButton(
-              onPressed: () => AppToast.error(
+              onPressed: () => Toastio.error(
                 'Please try again later',
                 title: 'Something went wrong',
               ),
               child: const Text('Error'),
             ),
             ElevatedButton(
-              onPressed: () => AppToast.warning('Check your input'),
+              onPressed: () => Toastio.warning('Check your input'),
               child: const Text('Warning'),
             ),
             ElevatedButton(
-              onPressed: () => AppToast.info(
+              onPressed: () => Toastio.info(
                 'You have a new notification',
                 title: 'New notification',
               ),
               child: const Text('Info'),
             ),
             ElevatedButton(
-              onPressed: () => AppToast.showGlobal(
+              onPressed: () => Toastio.showGlobal(
                 'Top positioned toast',
                 type: ToastType.info,
                 position: ToastPosition.top,
@@ -67,7 +67,7 @@ class ExamplePage extends StatelessWidget {
               child: const Text('Top'),
             ),
             ElevatedButton(
-              onPressed: () => AppToast.showGlobal(
+              onPressed: () => Toastio.showGlobal(
                 'Image toast with icon',
                 icon: FlutterLogo(size: 15),
                 type: ToastType.info,

@@ -10,8 +10,8 @@ export 'toast_type.dart';
 ///
 /// Call [initialize] once with the application's navigator key to enable
 /// context-free global toasts.
-class AppToast {
-  AppToast._();
+class Toastio {
+  Toastio._();
 
   static GlobalKey<NavigatorState>? _navigatorKey;
   static OverlayEntry? _current;
@@ -33,7 +33,7 @@ class AppToast {
   ///   home: const HomePage(),
   /// );
   ///
-  /// AppToast.initialize(navigatorKey);
+  /// Toastio.initialize(navigatorKey);
   /// ```
   static void initialize(GlobalKey<NavigatorState> navigatorKey) {
     _navigatorKey = navigatorKey;
@@ -64,8 +64,8 @@ class AppToast {
     final overlay = _globalOverlay();
     if (overlay == null) {
       debugPrint(
-        '[AppToast] No OverlayState available. '
-        'Call AppToast.initialize(navigatorKey) first.',
+        '[Toastio] No OverlayState available. '
+        'Call Toastio.initialize(navigatorKey) first.',
       );
       return;
     }
@@ -111,7 +111,7 @@ class AppToast {
   }) {
     final overlay = Overlay.maybeOf(context);
     if (overlay == null) {
-      debugPrint('[AppToast] No Overlay found for the supplied context.');
+      debugPrint('[Toastio] No Overlay found for the supplied context.');
       return;
     }
 
@@ -382,13 +382,13 @@ class _ToastWidgetState extends State<_ToastWidget>
   Color get _accent {
     switch (widget.type) {
       case ToastType.success:
-        return AppToast.white;
+        return Toastio.white;
       case ToastType.error:
-        return AppToast.errorColor;
+        return Toastio.errorColor;
       case ToastType.warning:
-        return AppToast.warningColor;
+        return Toastio.warningColor;
       case ToastType.info:
-        return AppToast.white;
+        return Toastio.white;
     }
   }
 
