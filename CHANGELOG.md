@@ -1,3 +1,9 @@
+## 1.0.1
+
+- Updated package metadata.
+- Improved package documentation and README screenshots.
+- Minor maintenance and publishing updates.
+
 ## 1.0.0
 
 - Initial release.
