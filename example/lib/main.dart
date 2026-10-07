@@ -69,7 +69,11 @@ class ExamplePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () => Toastio.showGlobal(
                 'Image toast with icon',
-                icon: FlutterLogo(size: 15),
+                icon: const Icon(Icons.notifications_active_outlined),
+                appIcon: const AssetImage('assets/success.png'),
+                bgColor: const Color(0xFF16352B),
+                accentColor: Colors.tealAccent,
+                iconColor: Colors.tealAccent,
                 type: ToastType.info,
                 position: ToastPosition.top,
               ),

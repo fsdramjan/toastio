@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class Toastio {
 
   static GlobalKey<NavigatorState>? _navigatorKey;
   static OverlayEntry? _current;
+  static GlobalKey<_ToastWidgetState>? _currentKey;
 
   static const Color successColor = Color(0xFF1E40AF);
   static const Color errorColor = Color(0xFFFF4D6A);
@@ -51,6 +53,11 @@ class Toastio {
     String? title,
     Color? bgColor,
     Color? textColor,
+    Color? accentColor,
+    Color? iconColor,
+    ImageProvider? appIcon,
+    Duration animationDuration = const Duration(milliseconds: 420),
+    Duration reverseAnimationDuration = const Duration(milliseconds: 260),
     Widget? icon,
     Widget? leading,
     ToastPosition position = ToastPosition.bottom,
@@ -78,6 +85,11 @@ class Toastio {
       title: title,
       bgColor: bgColor,
       textColor: textColor,
+      accentColor: accentColor,
+      iconColor: iconColor,
+      appIcon: appIcon,
+      animationDuration: animationDuration,
+      reverseAnimationDuration: reverseAnimationDuration,
       icon: icon,
       leading: leading,
       position: position,
@@ -99,6 +111,11 @@ class Toastio {
     String? title,
     Color? bgColor,
     Color? textColor,
+    Color? accentColor,
+    Color? iconColor,
+    ImageProvider? appIcon,
+    Duration animationDuration = const Duration(milliseconds: 420),
+    Duration reverseAnimationDuration = const Duration(milliseconds: 260),
     Widget? icon,
     Widget? leading,
     ToastPosition position = ToastPosition.bottom,
@@ -123,6 +140,11 @@ class Toastio {
       title: title,
       bgColor: bgColor,
       textColor: textColor,
+      accentColor: accentColor,
+      iconColor: iconColor,
+      appIcon: appIcon,
+      animationDuration: animationDuration,
+      reverseAnimationDuration: reverseAnimationDuration,
       icon: icon,
       leading: leading,
       position: position,
@@ -141,6 +163,13 @@ class Toastio {
     Duration duration = const Duration(seconds: 3),
     Color? bgColor,
     Color? textColor,
+    Color? accentColor,
+    Color? iconColor,
+    ImageProvider? appIcon,
+    Duration animationDuration = const Duration(milliseconds: 420),
+    Duration reverseAnimationDuration = const Duration(milliseconds: 260),
+    Widget? icon,
+    Widget? leading,
     ToastPosition position = ToastPosition.bottom,
     bool showCloseButton = true,
   }) {
@@ -151,6 +180,13 @@ class Toastio {
       duration: duration,
       bgColor: bgColor,
       textColor: textColor,
+      accentColor: accentColor,
+      iconColor: iconColor,
+      appIcon: appIcon,
+      animationDuration: animationDuration,
+      reverseAnimationDuration: reverseAnimationDuration,
+      icon: icon,
+      leading: leading,
       position: position,
       showCloseButton: showCloseButton,
     );
@@ -162,6 +198,13 @@ class Toastio {
     Duration duration = const Duration(seconds: 3),
     Color? bgColor,
     Color? textColor,
+    Color? accentColor,
+    Color? iconColor,
+    ImageProvider? appIcon,
+    Duration animationDuration = const Duration(milliseconds: 420),
+    Duration reverseAnimationDuration = const Duration(milliseconds: 260),
+    Widget? icon,
+    Widget? leading,
     ToastPosition position = ToastPosition.bottom,
     bool showCloseButton = true,
   }) {
@@ -172,6 +215,13 @@ class Toastio {
       duration: duration,
       bgColor: bgColor,
       textColor: textColor,
+      accentColor: accentColor,
+      iconColor: iconColor,
+      appIcon: appIcon,
+      animationDuration: animationDuration,
+      reverseAnimationDuration: reverseAnimationDuration,
+      icon: icon,
+      leading: leading,
       position: position,
       showCloseButton: showCloseButton,
     );
@@ -183,6 +233,13 @@ class Toastio {
     Duration duration = const Duration(seconds: 3),
     Color? bgColor,
     Color? textColor,
+    Color? accentColor,
+    Color? iconColor,
+    ImageProvider? appIcon,
+    Duration animationDuration = const Duration(milliseconds: 420),
+    Duration reverseAnimationDuration = const Duration(milliseconds: 260),
+    Widget? icon,
+    Widget? leading,
     ToastPosition position = ToastPosition.bottom,
     bool showCloseButton = true,
   }) {
@@ -193,6 +250,13 @@ class Toastio {
       duration: duration,
       bgColor: bgColor,
       textColor: textColor,
+      accentColor: accentColor,
+      iconColor: iconColor,
+      appIcon: appIcon,
+      animationDuration: animationDuration,
+      reverseAnimationDuration: reverseAnimationDuration,
+      icon: icon,
+      leading: leading,
       position: position,
       showCloseButton: showCloseButton,
     );
@@ -204,6 +268,13 @@ class Toastio {
     Duration duration = const Duration(seconds: 3),
     Color? bgColor,
     Color? textColor,
+    Color? accentColor,
+    Color? iconColor,
+    ImageProvider? appIcon,
+    Duration animationDuration = const Duration(milliseconds: 420),
+    Duration reverseAnimationDuration = const Duration(milliseconds: 260),
+    Widget? icon,
+    Widget? leading,
     ToastPosition position = ToastPosition.bottom,
     bool showCloseButton = true,
   }) {
@@ -214,16 +285,34 @@ class Toastio {
       duration: duration,
       bgColor: bgColor,
       textColor: textColor,
+      accentColor: accentColor,
+      iconColor: iconColor,
+      appIcon: appIcon,
+      animationDuration: animationDuration,
+      reverseAnimationDuration: reverseAnimationDuration,
+      icon: icon,
+      leading: leading,
       position: position,
       showCloseButton: showCloseButton,
     );
   }
 
-  /// Removes the currently visible toast immediately.
+  /// Hides the current toast with its exit animation.
   static void dismiss() {
+    final state = _currentKey?.currentState;
+    if (state != null) {
+      state._dismiss();
+    } else {
+      _removeCurrent();
+    }
+  }
+
+  static void _removeCurrent() {
     final entry = _current;
     _current = null;
+    _currentKey = null;
     entry?.remove();
+    entry?.dispose();
   }
 
   static void _insert(
@@ -234,6 +323,11 @@ class Toastio {
     String? title,
     Color? bgColor,
     Color? textColor,
+    Color? accentColor,
+    Color? iconColor,
+    ImageProvider? appIcon,
+    Duration animationDuration = const Duration(milliseconds: 420),
+    Duration reverseAnimationDuration = const Duration(milliseconds: 260),
     Widget? icon,
     Widget? leading,
     required ToastPosition position,
@@ -244,18 +338,28 @@ class Toastio {
     required bool showCloseButton,
     required bool dismissOnTap,
   }) {
-    dismiss();
+    assert(!duration.isNegative);
+    assert(!animationDuration.isNegative);
+    assert(!reverseAnimationDuration.isNegative);
+    _removeCurrent();
+    final key = GlobalKey<_ToastWidgetState>();
 
     late OverlayEntry entry;
 
     entry = OverlayEntry(
       builder: (_) => _ToastWidget(
+        key: key,
         message: message,
         title: title,
         type: type,
         duration: duration,
         bgColor: bgColor,
         textColor: textColor,
+        accentColor: accentColor,
+        iconColor: iconColor,
+        appIcon: appIcon,
+        animationDuration: animationDuration,
+        reverseAnimationDuration: reverseAnimationDuration,
         icon: icon,
         leading: leading,
         position: position,
@@ -267,14 +371,14 @@ class Toastio {
         dismissOnTap: dismissOnTap,
         onDone: () {
           if (_current == entry) {
-            _current = null;
-            entry.remove();
+            _removeCurrent();
           }
         },
       ),
     );
 
     _current = entry;
+    _currentKey = key;
     overlay.insert(entry);
   }
 }
@@ -286,6 +390,11 @@ class _ToastWidget extends StatefulWidget {
   final Duration duration;
   final Color? bgColor;
   final Color? textColor;
+  final Color? accentColor;
+  final Color? iconColor;
+  final ImageProvider? appIcon;
+  final Duration animationDuration;
+  final Duration reverseAnimationDuration;
   final Widget? icon;
   final Widget? leading;
   final ToastPosition position;
@@ -298,6 +407,9 @@ class _ToastWidget extends StatefulWidget {
   final VoidCallback onDone;
 
   const _ToastWidget({
+    super.key,
+    required this.animationDuration,
+    required this.reverseAnimationDuration,
     required this.message,
     required this.type,
     required this.duration,
@@ -312,6 +424,9 @@ class _ToastWidget extends StatefulWidget {
     this.title,
     this.bgColor,
     this.textColor,
+    this.accentColor,
+    this.iconColor,
+    this.appIcon,
     this.icon,
     this.leading,
   });
@@ -326,6 +441,8 @@ class _ToastWidgetState extends State<_ToastWidget>
   late final Animation<double> _opacity;
   late final Animation<double> _scale;
   bool _dismissed = false;
+  Timer? _timer;
+  late final Animation<Offset> _slide;
 
   @override
   void initState() {
@@ -333,38 +450,44 @@ class _ToastWidgetState extends State<_ToastWidget>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: widget.animationDuration,
+      reverseDuration: widget.reverseAnimationDuration,
     );
 
     _opacity = CurvedAnimation(
       parent: _controller,
       curve: Curves.easeOut,
+      reverseCurve: Curves.easeIn,
     );
 
     _scale = Tween<double>(
-      begin: 0.86,
+      begin: 0.92,
       end: 1,
     ).animate(
       CurvedAnimation(
         parent: _controller,
         curve: Curves.easeOutBack,
+        reverseCurve: Curves.easeInCubic,
       ),
     );
 
-    _controller.forward();
-
-    final dismissAfter = widget.duration - const Duration(milliseconds: 340);
-
-    Future.delayed(
-      dismissAfter.isNegative ? Duration.zero : dismissAfter,
-      _dismiss,
+    _slide = Tween<Offset>(begin: _slideBegin, end: Offset.zero).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeOutCubic,
+        reverseCurve: Curves.easeInCubic,
+      ),
     );
+    _controller.forward();
+    // Duration is the display time, followed by the exit animation.
+    _timer = Timer(widget.duration, _dismiss);
   }
 
   void _dismiss() {
     if (_dismissed || !mounted) return;
 
     _dismissed = true;
+    _timer?.cancel();
 
     _controller.reverse().whenComplete(() {
       if (mounted) {
@@ -375,11 +498,13 @@ class _ToastWidgetState extends State<_ToastWidget>
 
   @override
   void dispose() {
+    _timer?.cancel();
     _controller.dispose();
     super.dispose();
   }
 
   Color get _accent {
+    if (widget.accentColor != null) return widget.accentColor!;
     switch (widget.type) {
       case ToastType.success:
         return Toastio.white;
@@ -395,13 +520,13 @@ class _ToastWidgetState extends State<_ToastWidget>
   Color get _defaultBackground {
     switch (widget.type) {
       case ToastType.success:
-        return Color(0xFF1E40AF);
+        return const Color(0xFF1E40AF);
       case ToastType.error:
         return const Color(0xFF8B1E32);
       case ToastType.warning:
         return const Color(0xFF6D5010);
       case ToastType.info:
-        return Color(0xFF1E40AF);
+        return const Color(0xFF1E40AF);
     }
   }
 
@@ -467,15 +592,7 @@ class _ToastWidgetState extends State<_ToastWidget>
               child: FadeTransition(
                 opacity: _opacity,
                 child: SlideTransition(
-                  position: Tween<Offset>(
-                    begin: _slideBegin,
-                    end: Offset.zero,
-                  ).animate(
-                    CurvedAnimation(
-                      parent: _controller,
-                      curve: Curves.easeOutCubic,
-                    ),
-                  ),
+                  position: _slide,
                   child: ScaleTransition(
                     scale: _scale,
                     alignment: Alignment.center,
@@ -484,12 +601,14 @@ class _ToastWidgetState extends State<_ToastWidget>
                       child: _GlassCard(
                         bg: widget.bgColor ?? _defaultBackground,
                         accent: _accent,
-                        icon: widget.icon ??
-                            Icon(
-                              _iconData,
-                              color: _accent,
-                              size: 17,
-                            ),
+                        icon: IconTheme(
+                          data: IconThemeData(
+                            color: widget.iconColor ?? _accent,
+                            size: 17,
+                          ),
+                          child: widget.icon ?? Icon(_iconData),
+                        ),
+                        appIcon: widget.appIcon,
                         leading: widget.leading,
                         title: widget.title,
                         message: widget.message,
@@ -513,6 +632,7 @@ class _GlassCard extends StatelessWidget {
   final Color bg;
   final Color accent;
   final Widget icon;
+  final ImageProvider? appIcon;
   final Widget? leading;
   final String? title;
   final String message;
@@ -524,6 +644,7 @@ class _GlassCard extends StatelessWidget {
     required this.bg,
     required this.accent,
     required this.icon,
+    this.appIcon,
     required this.message,
     required this.textColor,
     required this.showCloseButton,
@@ -611,6 +732,23 @@ class _GlassCard extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    if (appIcon != null) ...[
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image(
+                          image: appIcon!,
+                          width: 34,
+                          height: 34,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => const SizedBox(
+                            width: 34,
+                            height: 34,
+                            child: Icon(Icons.broken_image_outlined),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                    ],
                     Container(
                       width: 34,
                       height: 34,

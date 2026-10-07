@@ -12,10 +12,11 @@ A lightweight, animated Glassmorphism toast package for Flutter with global and 
 - Global toast without passing `BuildContext`
 - Context-based API
 - Glassmorphism UI with blur
-- Smooth fade, slide and scale animations
+- Smooth fade, slide and scale entrance and exit animations with configurable timing
 - Close button
 - Auto dismiss
-- Custom background and text colors
+- Custom background, text, accent and icon colors
+- App icon images from assets, network URLs or memory
 - Custom icon and leading widget
 - Top, center and bottom positions
 - No GetX or other third-party dependencies
@@ -40,7 +41,14 @@ Add the package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  toastio: ^1.0.3
+  toastio: ^1.1.0
+```
+
+Import the package alongside Flutter Material widgets:
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:toastio/toastio.dart';
 ```
 
 Then run:
@@ -118,6 +126,80 @@ Toastio.showGlobal(
 );
 ```
 
+### App Image, Icon and Colors
+
+All APIs, including `success`, `error`, `warning` and `info`, support these options:
+
+```dart
+Toastio.success(
+  'Profile updated',
+  appIcon: const AssetImage('assets/app_icon.png'),
+  icon: const Icon(Icons.check_circle_outline),
+  bgColor: const Color(0xFF16352B),
+  textColor: Colors.white,
+  accentColor: Colors.tealAccent,
+  iconColor: Colors.tealAccent,
+  animationDuration: const Duration(milliseconds: 450),
+  reverseAnimationDuration: const Duration(milliseconds: 250),
+);
+```
+
+Register asset images in your app's `pubspec.yaml`. `appIcon` accepts any
+`ImageProvider`, including `AssetImage`, `NetworkImage` and `MemoryImage`, and
+appears beside the status icon. `leading` supports custom widgets.
+`iconColor` colors the default icon and custom icons without an explicit color.
+`accentColor` colors the border, glow and icon badge. When `iconColor` is omitted,
+the status icon inherits the accent color. An explicit color on a custom `Icon`
+takes precedence over `iconColor`.
+
+Register the asset used above:
+
+```yaml
+flutter:
+  assets:
+    - assets/app_icon.png
+```
+
+To load an image from a URL, use `appIcon: const NetworkImage('https://example.com/app_icon.png')`.
+Images are displayed at 34 x 34 pixels with rounded corners. A failed image load
+shows a fallback icon.
+
+Toasts enter and exit with fade, slide and scale animations. `duration` is the
+display time before the exit animation begins. Close, tap dismissal and
+`Toastio.dismiss()` use the same exit animation. A new toast replaces the old one.
+
+### Available Options
+
+These options are supported by `show`, `showGlobal`, `success`, `error`, `warning`
+and `info`:
+
+| Option | Default | Purpose |
+| --- | --- | --- |
+| `title` | Optional; success/error/warning supply a type title | Heading above the message |
+| `duration` | 3 seconds | Display time before exit begins |
+| `appIcon` | None | App image shown beside the status icon |
+| `icon` | Type-specific icon | Custom status widget |
+| `leading` | None | Extra widget before the text |
+| `bgColor` | Type-specific background | Card background |
+| `textColor` | White | Title, message and close-button color |
+| `accentColor` | Type-specific accent | Border, glow and icon badge |
+| `iconColor` | Accent color | Inherited status icon color |
+| `position` | `ToastPosition.bottom` | Top, center or bottom placement |
+| `showCloseButton` | `true` | Show the dismiss button |
+| `animationDuration` | 420 milliseconds | Entrance animation timing |
+| `reverseAnimationDuration` | 260 milliseconds | Exit animation timing |
+
+`show` and `showGlobal` also accept:
+
+| Option | Default | Purpose |
+| --- | --- | --- |
+| `type` | `ToastType.info` | Default colors and status icon |
+| `dismissOnTap` | `false` | Dismiss when the toast is tapped |
+| `horizontalMargin` | 16 | Horizontal spacing in logical pixels |
+| `topOffset` | 50 | Extra spacing when positioned at the top |
+| `bottomOffset` | 50 | Extra spacing when positioned at the bottom |
+| `maxWidth` | 600 | Maximum card width in logical pixels |
+
 ### Custom Icon
 
 ```dart
@@ -141,7 +223,7 @@ Toastio.showGlobal(
 
 ## Dismiss Manually
 
-You can dismiss the currently visible toast manually:
+You can dismiss the currently visible toast manually with its exit animation:
 
 ```dart
 Toastio.dismiss();
@@ -166,7 +248,7 @@ Available positions:
 
 ## Duration
 
-Set a custom duration for the toast:
+Set the display time before automatic dismissal. The exit animation runs afterward:
 
 ```dart
 Toastio.showGlobal(
@@ -174,6 +256,24 @@ Toastio.showGlobal(
   duration: const Duration(seconds: 4),
 );
 ```
+
+A 4-second `duration` with the default 260-millisecond exit animation takes
+approximately 4.26 seconds from insertion to removal. The entrance animation is
+included in `duration`. Durations must be non-negative.
+
+## Animation Timing
+
+```dart
+Toastio.showGlobal(
+  'Animated notification',
+  animationDuration: const Duration(milliseconds: 500),
+  reverseAnimationDuration: const Duration(milliseconds: 300),
+  dismissOnTap: true,
+);
+```
+
+Only one toast is shown at a time. Showing another toast replaces the current
+one immediately, then animates the new toast in.
 
 ## Example
 
